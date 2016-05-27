@@ -1,0 +1,142 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/calibrationresult.cpp
+calibrationresult.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/calibrationresult.h
+iostream
+-
+exception.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/exception.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/calibrationresult.h
+opencv2/opencv.hpp
+-
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/census-inl.h
+exception.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/exception.h
+census.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/census.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/census.cpp
+census-inl.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/census-inl.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/census.h
+opencv2/opencv.hpp
+-
+simd.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/simd.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/exception.h
+exception
+-
+string
+-
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/extendedfast.cpp
+iostream
+-
+iomanip
+-
+extendedfast.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/extendedfast.h
+fast9-inl.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/fast9-inl.h
+exception.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/exception.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/extendedfast.h
+opencv2/opencv.hpp
+-
+vector
+-
+cmath
+-
+simd.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/simd.h
+fast9.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/fast9.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/fast9-inl.h
+fast9.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/fast9.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/fast9.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/hammingdistance.cpp
+hammingdistance.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/hammingdistance.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/hammingdistance.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/imageconversion.cpp
+imageconversion.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/imageconversion.h
+simd.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/simd.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/imageconversion.h
+opencv2/opencv.hpp
+-
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/simd.cpp
+simd.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/simd.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/simd.h
+boost/smart_ptr.hpp
+-
+boost/bind.hpp
+-
+sys/types.h
+-
+pmmintrin.h
+-
+tmmintrin.h
+-
+smmintrin.h
+-
+nmmintrin.h
+-
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/sparserectification.cpp
+sparserectification.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/sparserectification.h
+stereorectification.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/stereorectification.h
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/sparserectification.h
+vector
+-
+opencv2/opencv.hpp
+-
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/stereorectification.cpp
+stereorectification.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/stereorectification.h
+cstring
+-
+climits
+-
+
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/stereorectification.h
+utility
+-
+vector
+-
+cassert
+-
+opencv2/opencv.hpp
+-
+boost/smart_ptr.hpp
+-
+calibrationresult.h
+/home/n1502457d/Documents/Piyush/NTU Internship/stereo matching/SparseSetero Code/exFAST_SparseStereo/src/sparsestereo/calibrationresult.h
+

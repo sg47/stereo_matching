@@ -1,0 +1,15 @@
+noc = [70.9177 91.4648 89.0128 93.8613 89.0128 93.8613 93.6464 94.9344 93.6462 94.9344 93.6013 94.8824 ] ;
+ x = [1:1:12];
+figure();
+bar(x,noc);
+title('Comparison with NOC disparity Maps');
+ ax=gca;
+ax.XTickLabel = {'CannyEdge- 1','SGBM-1', 'CannyEdge- 2','SGBM-2','CannyEdge- 4','SGBM-4','CannyEdge- 8','SGBM-8','CannyEdge- 12','SGBM-12','CannyEdge- 16','SGBM-16'}; 
+ax.XTickLabelRotation = 90;
+occ = [ 70.6941 91.1773 88.8591 93.7016 88.8591 93.7015 93.5484 94.836 93.5482 94.836 93.5028 94.7836 ] ;
+figure();
+bar(x,occ);
+title('Comparison with OOC disparity Maps');
+ ax=gca;
+ ax.XTickLabel =  {'CannyEdge- 1','SGBM-1', 'CannyEdge- 2','SGBM-2','CannyEdge- 4','SGBM-4','CannyEdge- 8','SGBM-8','CannyEdge- 12','SGBM-12','CannyEdge- 16','SGBM-16'}; 
+ax.XTickLabelRotation = 90;
