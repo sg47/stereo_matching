@@ -31,6 +31,8 @@ hammingdistance.h
 ../src/sparsestereo/hammingdistance.h
 simd.h
 ../src/sparsestereo/simd.h
+math.h
+-
 
 ../src/sparsestereo/exception.h
 exception

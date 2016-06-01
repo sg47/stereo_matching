@@ -61,7 +61,7 @@ namespace sparsestereo
 		void setReferencePoint(const cv::Point2i& point);
 		
 		// Performs a window matching using census transformed images
-		__always_inline short match(cv::Point2i point) const;
+		__always_inline short match(cv::Point2i point,cv::Mat& colorLeft, cv::Mat& colorRight) const;
 		
 		private:
 		v4si lookupTableVec;
@@ -72,8 +72,8 @@ namespace sparsestereo
 		HammingDistance hammingDist;
 		cv::Mat_<unsigned int> refImage;
 		cv::Mat_<unsigned int> compImage;
-		cv::Mat refColorImage;
-		cv::Mat compColorImage;
+		cv::Mat_<unsigned int> refColorImage;
+		cv::Mat_<unsigned int> compColorImage;
 		cv::Point2i refPoint;
 
 		// Stores a window in two SSE vectors
@@ -118,7 +118,7 @@ namespace sparsestereo
 #endif
 	
 	template <int SIZE>
-	__always_inline short CensusWindow<SIZE>::match(cv::Point2i point) const {
+	__always_inline short CensusWindow<SIZE>::match(cv::Point2i point,cv::Mat& colorLeft, cv::Mat& colorRight) const {
 		int costs = 0;
 		
 #ifndef SPARSESTEREO_NO_POPCNT
@@ -156,39 +156,24 @@ namespace sparsestereo
 
 		// 		}
 		// }
-		//cout<<"censuswindow.h Line 159"<<endl;
-		// Mat leftLab, rightLab ; 
-		// cvtColor(colorLeft, leftLab, CV_BGR2Lab);
-  //  		cvtColor(colorRight, rightLab, CV_BGR2Lab);
-		//cout<<"censuswindow.h Line 163"<<endl;
+		//cout<<"censuswindow.h Line 135"<<endl;
+		Mat leftLab, rightLab ; 
+		cvtColor(colorLeft, leftLab, CV_BGR2Lab);
+   		cvtColor(colorRight, rightLab, CV_BGR2Lab);
 
-   		int Yc =7 , Yp = 36 ,k=1; 
+   		int Yc =7 , Yp = 30 ,k=1; 
 		for(int y=-SIZE/2; y<=SIZE/2; y++)
 			for(int x=-SIZE/2; x<=SIZE/2; x++)
 				{
 					// cout<<"Value1 = "<<refPoint.y + y<<endl;
 							// cout<<"Value2 = "<<refPoint.x + x<<endl;
+					float colorDiff = pow( pow((unsigned int)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[0] - (unsigned int)compColorImage.at<cv::Vec3b>(point.y + y,point.x + x)[0],2)+ pow((unsigned int)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[1] - (unsigned int)compColorImage.at<cv::Vec3b>(point.y + y,point.x + x)[1],2) +pow((unsigned int)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[2] - (unsigned int)compColorImage.at<cv::Vec3b>(point.y + y,point.x + x)[2],2),0.5);
+					float spatialDiff = pow(pow(refPoint.y -point.y,2)+pow(pointX-pointX1,2),0.5);
+					float weight =  exp(-((colorDiff/Yc)+(spatialDiff/Yp)));
+		
 					if(!((refPoint.y +y <1)||(refPoint.x + x <0)))
-					{
-						//cout<<"censuswindow.h Line 173"<<endl;
-						float colorDiff = pow( pow((short)refColorImage.at<cv::Vec3b>(refPoint.y ,refPoint.x)[0] - (short)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[0],2)
-										+ pow((short)refColorImage.at<cv::Vec3b>(refPoint.y ,refPoint.x )[1] - (short)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[1],2) 
-										+ pow((short)refColorImage.at<cv::Vec3b>(refPoint.y,refPoint.x)[2] - (short)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[2],2),0.5);
-						float spatialDiff = pow(pow(y,2)+pow(x,2),0.5);
-						float weight =  k*exp(-((colorDiff/Yc)+(spatialDiff/Yp)));
-						// cout<<"Color Diff = " <<colorDiff<<endl;
-						//cout<<"Spatial Diff = " <<spatialDiff<<endl;
-						// cout<<"weight = " <<weight<<endl;
-						// cout<<"H distance = " <<(unsigned int)hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x))<<endl;
-						// cout<<"cost = " <<weight*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x))<<endl;
-						
-						//float weight = 1;
-						costs += weight*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x));
-					}
-							//cout<<"censuswindow.h Line 182"<<endl;
-
+					costs += weight*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x));
 				}
-				//cout<<"Costs = "<<costs<<endl;
 
 #else
 		for(int y=-SIZE/2; y<=SIZE/2; y++)

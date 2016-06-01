@@ -33,7 +33,7 @@ namespace sparsestereo {
 	void SparseStereo<CORRELATION, COST_TYPE>::match(const cv::Mat& left, const cv::Mat& right,
 		const std::vector<cv::KeyPoint>& leftFeat, const std::vector<cv::KeyPoint>& rightFeat,
 		std::vector<SparseMatch>* matches , cv::Mat& colorLeft, cv::Mat& colorRight) {
-			//cout<<"Sparsestereo-inl.h Line 36"<<endl;
+		//	cout<<"Sparsestereo-inl.h Line 36"<<endl;
 
 		if(left.size() != right.size() || (rect != NULL && left.size() != rect->getCalibrationResult().imageSize))
 			throw Exception("Mismatching image sizes");
@@ -43,22 +43,22 @@ namespace sparsestereo {
 		// For the first time, or when the image size changes, compute epiline lookup table
 		if(left.cols != precompEpilinesStart.cols || left.rows != precompEpilinesStart.rows)
 			sparseRect.precomputeEpilinesStart(left.cols, left.rows, &precompEpilinesStart);
-				//	//cout<<"Sparsestereo-inl.h Line 46"<<endl;
+				//	cout<<"Sparsestereo-inl.h Line 46"<<endl;
 
 		// Rectify feature points
-		sparseRect.rectify(leftFeat, rightFeat, &leftFeatures, &rightFeatures);	//sort and convert features into a specific datastructure
+		sparseRect.rectify(leftFeat, rightFeat, &leftFeatures, &rightFeatures);
 	
 		// Features are now sorted from top left to bottom right
 		boost::shared_array<unsigned int> offsets = SIMD::alignedNew<unsigned int>(left.rows);
 		int maxRowLen __attribute__((unused)) = getRowOffsets(rightFeatures, offsets.get(), left.rows);
-					////cout<<"Sparsestereo-inl.h Line 54"<<endl;
+					//cout<<"Sparsestereo-inl.h Line 54"<<endl;
 
 		minimumMatches.resize(leftFeatures.size());
 		//	cout<<"Sparsestereo-inl.h Line 57"<<endl;
 
 		// Perform matching
 		calcCosts(left, right, offsets.get(),colorLeft, colorRight);
-			cout<<"Sparsestereo-inl.h Line 61"<<endl;
+		//	cout<<"Sparsestereo-inl.h Line 61"<<endl;
 		// Perform left/right consistency check
 		denseConsistencyCheck(left, right, colorLeft, colorRight);
 				//	cout<<"Sparsestereo-inl.h Line 64"<<endl;
@@ -87,18 +87,16 @@ namespace sparsestereo {
 		
 		int lastRow = -1e9; //Invalid value
 		CORRELATION correlation;
-	//	//cout<<"Sparsestereo-inl.h Line 90"<<endl;
-
 		correlation.setReferenceImage(left,colorLeft);
 		correlation.setComparisonImage(right,colorRight);
-		//cout<<"Sparsestereo-inl.h Line 92"<<endl;
+				//cout<<"Sparsestereo-inl.h Line 92"<<endl;
 
 		for(int l=0; l<(int)leftFeatures.size(); l++) {
 			// Find row start and end points
 			int ly = (int)(leftFeatures[l].rectPoint.y + 0.5);
 			int rightStart = rowOffsets[min(left.rows-1, max(0, int(ly - yTolerance)))];
 			int rightEnd = rowOffsets[min(left.rows-1, max(0, int(ly + yTolerance) + 2))];
-		//cout<<"Sparsestereo-inl.h Line 99"<<endl;
+						//	cout<<"Sparsestereo-inl.h Line 99"<<endl;
 
 			if(ly != lastRow) {
 				// Skip top and bottom
@@ -115,15 +113,14 @@ namespace sparsestereo {
 				// We have to initialize a new cost cube row
 				lastRow = ly;
 			}		
-			//cout<<"Sparsestereo-inl.h Line 116"<<endl;
+						//	cout<<"Sparsestereo-inl.h Line 116"<<endl;
 
 			COST_TYPE minCost = numeric_limits<COST_TYPE>::max();
-			//cout<<"Min Cost = " << minCost <<endl;
 			int minRightFeature = -1;
 			
 			correlation.setReferencePoint(cv::Point2i(int(leftFeatures[l].imgPoint->pt.x + 0.5),
 				int(leftFeatures[l].imgPoint->pt.y + 0.5)));
-						//	//cout<<"Sparsestereo-inl.h Line 124"<<endl;
+						//	cout<<"Sparsestereo-inl.h Line 124"<<endl;
 
 			for(int r=rightStart; r<rightEnd; r++) {
 				// First test if this would be a valid match
@@ -132,27 +129,27 @@ namespace sparsestereo {
 					fabs(leftFeatures[l].rectPoint.y - rightFeatures[r].rectPoint.y) <= yTolerance &&
 					rightFeatures[r].rectPoint.x >= correlation.getWindowSize()/2 &&
 					rightFeatures[r].rectPoint.x < left.cols - correlation.getWindowSize()/2)
-				{		//	//cout<<"Sparsestereo-inl.h Line 132"<<endl;
+				{		//	cout<<"Sparsestereo-inl.h Line 132"<<endl;
 
 					// It is! Let's compute a cost
 					COST_TYPE currentCost = correlation.match(
-						cv::Point2i(int(rightFeatures[r].imgPoint->pt.x + 0.5), int(rightFeatures[r].imgPoint->pt.y + 0.5)) );
-						//	//cout<<"Sparsestereo-inl.h Line 138"<<endl;
+						cv::Point2i(int(rightFeatures[r].imgPoint->pt.x + 0.5), int(rightFeatures[r].imgPoint->pt.y + 0.5)) , colorLeft, colorRight);
+						//	cout<<"Sparsestereo-inl.h Line 138"<<endl;
 
 					if(currentCost < minCost) { // Only store smaller costs
 						minCost = currentCost;
 						minRightFeature = r;
 					}
-										//		//cout<<"Sparsestereo-inl.h Line 144"<<endl;
+										//		cout<<"Sparsestereo-inl.h Line 144"<<endl;
 
 				}
 			}
-						//	//cout<<"Sparsestereo-inl.h Line 143"<<endl;
+						//	cout<<"Sparsestereo-inl.h Line 143"<<endl;
 
 
 			minimumMatches[l] = std::pair<int, COST_TYPE>(minRightFeature, minCost);
 		}
-			//	//cout<<"Sparsestereo-inl.h Line 143"<<endl;
+			//	cout<<"Sparsestereo-inl.h Line 143"<<endl;
 
 	}
 	
@@ -196,7 +193,7 @@ namespace sparsestereo {
 		CORRELATION correlation;
 		correlation.setReferenceImage(right,colorRight);
 		correlation.setComparisonImage(left,colorLeft);
-	//	//cout<<"Sparsestereo-inl.h Line 196"<<endl;
+	//	cout<<"Sparsestereo-inl.h Line 196"<<endl;
 		for(int l = 0; l < (int)leftFeatures.size(); l++) {
 			int ly = (int)(leftFeatures[l].rectPoint.y + 0.5);
 			if(ly != lastRow) {		
@@ -208,14 +205,14 @@ namespace sparsestereo {
 								
 				lastRow = ly;
 			}
-			////cout<<"Sparsestereo-inl.h Line 208"<<endl;
+			//cout<<"Sparsestereo-inl.h Line 208"<<endl;
 			// Get the minimum match and cost
 			int r = minimumMatches[l].first;
 			COST_TYPE minCost = minimumMatches[l].second;
 			
 			if(r == -1)
 				continue;
-			////cout<<"Sparsestereo-inl.h Line 215"<<endl;
+			//cout<<"Sparsestereo-inl.h Line 215"<<endl;
 			// Get epiline start and end
 			float leftStartX = precompEpilinesStart(leftFeatures[l].imgPoint->pt.y, max(0, min(
 				precompEpilinesStart.cols, (int)(rightFeatures[r].rectPoint.x+0.5))));
@@ -225,11 +222,11 @@ namespace sparsestereo {
 			Epiline epiline = rect!=NULL ? rect->getLeftEpiline(leftFeatures[l].imgPoint->pt) : Epiline(leftFeatures[l].imgPoint->pt.y);
 			if(!epiline.isValid())
 				continue;
-						////cout<<"Sparsestereo-inl.h Line 225"<<endl;
+						//cout<<"Sparsestereo-inl.h Line 225"<<endl;
 
 			// Preform consistency check
 			correlation.setReferencePoint(cv::Point2i(int(rightFeatures[r].imgPoint->pt.x + 0.5), int(rightFeatures[r].imgPoint->pt.y + 0.5)));
-						// //cout<<"Sparsestereo-inl.h Line 229"<<endl;
+						// cout<<"Sparsestereo-inl.h Line 229"<<endl;
 						// cout<<"Startx ="<<startX <<endl; 
 						// cout<<"enx ="<<endX <<endl; 
 						// cout<<"leftRightStep ="<<leftRightStep <<endl; 
@@ -239,10 +236,10 @@ namespace sparsestereo {
 				int y = (int)(epiline.at(x) + 0.5);
 				if(y < correlation.getWindowSize()/2 || y >= left.rows - correlation.getWindowSize()/2)
 					continue;
-							////cout<<"Sparsestereo-inl.h Line 235"<<endl;
+							//cout<<"Sparsestereo-inl.h Line 235"<<endl;
 
-				COST_TYPE currentCost = correlation.match(cv::Point2i(x, y));
-							////cout<<"Sparsestereo-inl.h Line 238"<<endl;
+				COST_TYPE currentCost = correlation.match(cv::Point2i(x, y),colorLeft, colorRight);
+							//cout<<"Sparsestereo-inl.h Line 238"<<endl;
 
 				if(currentCost < minCost/uniqueness && fabs(x - int(leftFeatures[l].imgPoint->pt.x+0.5)) > leftRightStep) {
 					minimumMatches[l].first = -1;

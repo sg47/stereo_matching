@@ -1,53 +1,5 @@
 File Number = 000000_10.png
  
-No of edges for census window = 0
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 1
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 2
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 3
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 4
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 5
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
 No of edges for census window = 6
 
 
@@ -65,38 +17,6 @@ No of edges for census window = 7
 File Number = 000000_10.png
  
 No of edges for census window = 8
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 9
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 10
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 11
-
-
-||||||||||||||
- 
- 
-File Number = 000000_10.png
- 
-No of edges for census window = 12
 
 
 ||||||||||||||
