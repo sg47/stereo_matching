@@ -27,7 +27,7 @@ namespace sparsestereo {
 		
 		// Matches using a census window
 		void match(const cv::Mat& left, const cv::Mat& right, const std::vector<cv::KeyPoint>& leftFeat,
-			const std::vector<cv::KeyPoint>& rightFeat, std::vector<SparseMatch>* matches ,cv::Mat& colorLeft, cv::Mat& colorRight);
+			const std::vector<cv::KeyPoint>& rightFeat, std::vector<SparseMatch>* matches ,cv::Mat& colorLeft, cv::Mat& colorRight,int combination);
 		
 	private:
 		std::vector<SparseRectification::RectifiedFeature> leftFeatures, rightFeatures;	
@@ -47,10 +47,10 @@ namespace sparsestereo {
 			int maxRows);
 			
 		// Calculates the matching costs using census windows
-		void calcCosts(const cv::Mat& left, const cv::Mat& right, unsigned int* rowOffsets,cv::Mat& colorLeft, cv::Mat& colorRight);
+		void calcCosts(const cv::Mat& left, const cv::Mat& right, unsigned int* rowOffsets,cv::Mat& colorLeft, cv::Mat& colorRight,int combination);
 			
 		// Performs a left/right consistency check that is dense in the left image
-		void denseConsistencyCheck(const cv::Mat& left, const cv::Mat& right,cv::Mat& colorLeft, cv::Mat& colorRight);
+		void denseConsistencyCheck(const cv::Mat& left, const cv::Mat& right,cv::Mat& colorLeft, cv::Mat& colorRight,int combination);
 	};
 }
 

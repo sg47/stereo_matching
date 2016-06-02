@@ -1,39 +1,45 @@
-yNoc = [32.7727 21.885 20.2559 9.34796 15.7384; 31.5644 20.8306 21.1284 9.67488 16.8018; 32.6758 21.2988 20.1169 9.03011 16.8784] ;
-yOcc = [32.7727 21.885 20.2559 9.34796 15.7384; 31.5644 20.8306 21.1284 9.67488 16.8018; 32.6758 21.2988 20.1169 9.03011 16.8784] ;
-sgbmNoc = [68.3282 22.531 5.25696 1.6169 2.26691; 67.96 22.5885 5.41032 1.65867 2.38253; 68.1486 22.6867 5.20693 1.66555 2.29223] ;
-sgbmOcc = [68.3282 22.531 5.25696 1.6169 2.26691; 67.96 22.5885 5.41032 1.65867 2.38253; 68.1486 22.6867 5.20693 1.66555 2.29223] ;
+yNoc0 = [50.0058 27.2196 14.5386 2.47079 5.76519; 47.3574 24.3064 13.0948 2.23422 13.0071] ;
+yOcc0 = [50.0058 27.2196 14.5386 2.47079 5.76519; 47.3574 24.3064 13.0948 2.23422 13.0071] ;
+sgbmNoc0 = [68.8843 20.1986 6.43692 2.45327 2.02687; 68.5116 19.8043 6.77691 2.62572 2.28147] ;
+sgbmOcc0 = [68.8843 20.1986 6.43692 2.45327 2.02687; 68.5116 19.8043 6.77691 2.62572 2.28147] ;
 
-x = [1:1:3] ; 
+x = [1:1:13] ; 
  figure() ; 
  subplot(2,1,1); 
- bar(x,yNoc);
+ bar(x,yOcc0);
  grid on ; 
-title('CannyEdgeNoc');
+title('CannyEdgeOcc0');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 
 ax.XTickLabelRotation=45;
 subplot(2,1,2); 
- bar(x,sgbmNoc);
+ bar(x,sgbmOcc0);
  grid on ; 
-title('SGBMNoc');
+title('SGBMOcc0');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 
 ax.XTickLabelRotation=45;
+yNoc1 = [49.0537 26.8166 14.8072 2.79206 6.53037; 46.8984 23.6585 12.6291 2.55822 14.2558] ;
+yOcc1 = [49.0537 26.8166 14.8072 2.79206 6.53037; 46.8984 23.6585 12.6291 2.55822 14.2558] ;
+sgbmNoc1 = [68.8843 20.1986 6.43692 2.45327 2.02687; 68.5116 19.8043 6.77691 2.62572 2.28147] ;
+sgbmOcc1 = [68.8843 20.1986 6.43692 2.45327 2.02687; 68.5116 19.8043 6.77691 2.62572 2.28147] ;
+
+x = [1:1:13] ; 
  figure() ; 
  subplot(2,1,1); 
- bar(x,yOcc);
+ bar(x,yOcc1);
  grid on ; 
-title('CannyEdgeOcc');
+title('CannyEdgeOcc1');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 
 ax.XTickLabelRotation=45;
 subplot(2,1,2); 
- bar(x,sgbmOcc);
+ bar(x,sgbmOcc1);
  grid on ; 
-title('SGBMOcc');
+title('SGBMOcc1');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 

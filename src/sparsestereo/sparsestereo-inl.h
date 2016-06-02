@@ -32,7 +32,7 @@ namespace sparsestereo {
 	template <class CORRELATION, typename COST_TYPE>
 	void SparseStereo<CORRELATION, COST_TYPE>::match(const cv::Mat& left, const cv::Mat& right,
 		const std::vector<cv::KeyPoint>& leftFeat, const std::vector<cv::KeyPoint>& rightFeat,
-		std::vector<SparseMatch>* matches , cv::Mat& colorLeft, cv::Mat& colorRight) {
+		std::vector<SparseMatch>* matches , cv::Mat& colorLeft, cv::Mat& colorRight ,int combination) {
 			//cout<<"Sparsestereo-inl.h Line 36"<<endl;
 
 		if(left.size() != right.size() || (rect != NULL && left.size() != rect->getCalibrationResult().imageSize))
@@ -52,18 +52,20 @@ namespace sparsestereo {
 		boost::shared_array<unsigned int> offsets = SIMD::alignedNew<unsigned int>(left.rows);
 		int maxRowLen __attribute__((unused)) = getRowOffsets(rightFeatures, offsets.get(), left.rows);
 					////cout<<"Sparsestereo-inl.h Line 54"<<endl;
-
+		minimumMatches.clear();
 		minimumMatches.resize(leftFeatures.size());
 		//	cout<<"Sparsestereo-inl.h Line 57"<<endl;
 
 		// Perform matching
-		calcCosts(left, right, offsets.get(),colorLeft, colorRight);
-			cout<<"Sparsestereo-inl.h Line 61"<<endl;
+		calcCosts(left, right, offsets.get(),colorLeft, colorRight,combination);
+	//		cout<<"Sparsestereo-inl.h Line 61"<<endl;
 		// Perform left/right consistency check
-		denseConsistencyCheck(left, right, colorLeft, colorRight);
+		denseConsistencyCheck(left, right, colorLeft, colorRight,combination);
 				//	cout<<"Sparsestereo-inl.h Line 64"<<endl;
 
 		// Compose sparse disparity list
+	//	cout<<"left features size = "<<(int) leftFeatures.size()<<endl;
+		//int count =0;
 		for(int i=0; i<(int)leftFeatures.size(); i++) {
 			const cv::KeyPoint* rightFeature = NULL;
 			cv::Point2f rightRect = leftFeatures[i].rectPoint + cv::Point2f(1, 0); //Disparity -1
@@ -73,17 +75,23 @@ namespace sparsestereo {
 				rightFeature = rightFeatures[minimumMatches[i].first].imgPoint;
 				rightRect = rightFeatures[minimumMatches[i].first].rectPoint;
 				cost = minimumMatches[i].second;
+				//count++ ;
 			}
+
 						
 
 			if(rightFeature != NULL || storeUnmatched)
+			{
 				matches->push_back(SparseMatch(leftFeatures[i].imgPoint, rightFeature, leftFeatures[i].rectPoint, rightRect, cost));
+			//	cout<<"Points = "<<leftFeatures[i]->imgPoint.x<<endl;
+			}
 		}
+	//	cout<<"Count ="<<count<<endl;
 	//	cout<<"Sparsestereo-inl.h Line 82"<<endl;
 	}
 	
 	template <class CORRELATION, typename COST_TYPE>
-	void SparseStereo<CORRELATION, COST_TYPE>::calcCosts(const cv::Mat& left, const cv::Mat& right, unsigned int* rowOffsets,cv::Mat& colorLeft, cv::Mat& colorRight) {
+	void SparseStereo<CORRELATION, COST_TYPE>::calcCosts(const cv::Mat& left, const cv::Mat& right, unsigned int* rowOffsets,cv::Mat& colorLeft, cv::Mat& colorRight, int combination) {
 		
 		int lastRow = -1e9; //Invalid value
 		CORRELATION correlation;
@@ -136,7 +144,7 @@ namespace sparsestereo {
 
 					// It is! Let's compute a cost
 					COST_TYPE currentCost = correlation.match(
-						cv::Point2i(int(rightFeatures[r].imgPoint->pt.x + 0.5), int(rightFeatures[r].imgPoint->pt.y + 0.5)) );
+						cv::Point2i(int(rightFeatures[r].imgPoint->pt.x + 0.5), int(rightFeatures[r].imgPoint->pt.y + 0.5)) ,combination);
 						//	//cout<<"Sparsestereo-inl.h Line 138"<<endl;
 
 					if(currentCost < minCost) { // Only store smaller costs
@@ -191,7 +199,7 @@ namespace sparsestereo {
 	}
 
 	template <class CORRELATION, typename COST_TYPE>
-	void SparseStereo<CORRELATION, COST_TYPE>::denseConsistencyCheck(const cv::Mat& left, const cv::Mat& right ,cv::Mat& colorLeft, cv::Mat& colorRight) {			
+	void SparseStereo<CORRELATION, COST_TYPE>::denseConsistencyCheck(const cv::Mat& left, const cv::Mat& right ,cv::Mat& colorLeft, cv::Mat& colorRight, int combination) {			
 		int lastRow = -1e9; //Invalid value
 		CORRELATION correlation;
 		correlation.setReferenceImage(right,colorRight);
@@ -241,7 +249,7 @@ namespace sparsestereo {
 					continue;
 							////cout<<"Sparsestereo-inl.h Line 235"<<endl;
 
-				COST_TYPE currentCost = correlation.match(cv::Point2i(x, y));
+				COST_TYPE currentCost = correlation.match(cv::Point2i(x, y),combination);
 							////cout<<"Sparsestereo-inl.h Line 238"<<endl;
 
 				if(currentCost < minCost/uniqueness && fabs(x - int(leftFeatures[l].imgPoint->pt.x+0.5)) > leftRightStep) {
