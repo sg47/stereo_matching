@@ -163,7 +163,7 @@ namespace sparsestereo
 		//cout<<"censuswindow.h Line 163"<<endl;
 		if(combination == 1)
 		{
-	   		int Yc =47 , Yp = 36 ,k=50; 
+	   		int Yc =47 , Yp = 36 ,k=1; 	
 			for(int y=-SIZE/2; y<=SIZE/2; y++)
 				for(int x=-SIZE/2; x<=SIZE/2; x++)
 					{
@@ -178,13 +178,13 @@ namespace sparsestereo
 							float spatialDiff = pow(pow(y,2)+pow(x,2),0.5);
 							float weight =  k*exp(-((colorDiff/Yc)+(spatialDiff/Yp)));
 							// cout<<"Color Diff = " <<colorDiff<<endl;
-							//cout<<"Spatial Diff = " <<spatialDiff<<endl;
-							// cout<<"weight = " <<weight<<endl;
-							// cout<<"H distance = " <<(unsigned int)hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x))<<endl;
-							// cout<<"cost = " <<weight*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x))<<endl;
+							// cout<<"Spatial Diff = " <<spatialDiff<<endl;
+							//  cout<<"weight = " <<1-weight<<endl;
+							//  cout<<"H distance = " <<(unsigned int)hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x))<<endl;
+							//   cout<<"cost = " <<(1-weight)*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x))<<endl;
 							
 							//float weight = 1;
-							costs += weight*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x));
+							costs += 100*(1-weight)*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x));
 						}
 								//cout<<"censuswindow.h Line 182"<<endl;
 
