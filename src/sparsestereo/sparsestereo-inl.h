@@ -126,6 +126,8 @@ namespace sparsestereo {
 			//cout<<"Sparsestereo-inl.h Line 116"<<endl;
 
 			COST_TYPE minCost = numeric_limits<COST_TYPE>::max();
+		//	COST_TYPE minCost = -1;
+
 			//cout<<"Min Cost = " << minCost <<endl;
 			int minRightFeature = -1;
 			

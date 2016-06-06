@@ -119,8 +119,8 @@ namespace sparsestereo
 	
 	template <int SIZE>
 	__always_inline short CensusWindow<SIZE>::match(cv::Point2i point,int combination) const {
-		int costs = 0;
-		
+		float costs = 0;
+		float weightsAgg=0;
 #ifndef SPARSESTEREO_NO_POPCNT
 								//	cout<<"censuswindow.h Line 101"<<endl;
 
@@ -163,7 +163,7 @@ namespace sparsestereo
 		//cout<<"censuswindow.h Line 163"<<endl;
 		if(combination == 1)
 		{
-	   		int Yc =47 , Yp = 36 ,k=1; 	
+	   		int Yc =32 , Yp = 36 ,k=13; 	
 			for(int y=-SIZE/2; y<=SIZE/2; y++)
 				for(int x=-SIZE/2; x<=SIZE/2; x++)
 					{
@@ -172,11 +172,17 @@ namespace sparsestereo
 						if(!((refPoint.y +y <1)||(refPoint.x + x <0)))
 						{
 							//cout<<"censuswindow.h Line 173"<<endl;
-							float colorDiff = pow( pow((short)refColorImage.at<cv::Vec3b>(refPoint.y ,refPoint.x)[0] - (short)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[0],2)
+							float colorDiffLeft = pow( pow((short)refColorImage.at<cv::Vec3b>(refPoint.y ,refPoint.x)[0] - (short)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[0],2)
 											+ pow((short)refColorImage.at<cv::Vec3b>(refPoint.y ,refPoint.x )[1] - (short)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[1],2) 
 											+ pow((short)refColorImage.at<cv::Vec3b>(refPoint.y,refPoint.x)[2] - (short)refColorImage.at<cv::Vec3b>(refPoint.y + y,refPoint.x + x)[2],2),0.5);
-							float spatialDiff = pow(pow(y,2)+pow(x,2),0.5);
-							float weight =  k*exp(-((colorDiff/Yc)+(spatialDiff/Yp)));
+							float spatialDiffLeft = pow(pow(y,2)+pow(x,2),0.5);
+							float weightLeft =  k*exp(-((colorDiffLeft/Yc)+(spatialDiffLeft/Yp)));
+
+							float colorDiffRight = pow( pow((short)compColorImage.at<cv::Vec3b>(point.y ,point.x)[0] - (short)compColorImage.at<cv::Vec3b>(point.y + y,point.x + x)[0],2)
+											+ pow((short)compColorImage.at<cv::Vec3b>(point.y ,point.x )[1] - (short)compColorImage.at<cv::Vec3b>(point.y + y,point.x + x)[1],2) 
+											+ pow((short)compColorImage.at<cv::Vec3b>(point.y,point.x)[2] - (short)compColorImage.at<cv::Vec3b>(point.y + y,point.x + x)[2],2),0.5);
+							float spatialDiffRight = pow(pow(y,2)+pow(x,2),0.5);
+							float weightRight =  k*exp(-((colorDiffRight/Yc)+(spatialDiffRight/Yp)));
 							// cout<<"Color Diff = " <<colorDiff<<endl;
 							// cout<<"Spatial Diff = " <<spatialDiff<<endl;
 							//  cout<<"weight = " <<1-weight<<endl;
@@ -184,12 +190,14 @@ namespace sparsestereo
 							//   cout<<"cost = " <<(1-weight)*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x))<<endl;
 							
 							//float weight = 1;
-							costs += 100*(1-weight)*hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x));
+							costs += weightLeft*weightRight*(16-hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x)));
+							weightsAgg += weightLeft*weightRight;
 						}
 								//cout<<"censuswindow.h Line 182"<<endl;
 
 					}
 					//cout<<"Costs = "<<costs<<endl;
+					costs = -costs/weightsAgg ; 
 		}
 		else
 		{
