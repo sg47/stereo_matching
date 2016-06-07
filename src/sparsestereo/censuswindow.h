@@ -119,7 +119,7 @@ namespace sparsestereo
 	
 	template <int SIZE>
 	__always_inline short CensusWindow<SIZE>::match(cv::Point2i point,int combination) const {
-		float costs = 0;
+		long double costs = 0;
 		float weightsAgg=0;
 #ifndef SPARSESTEREO_NO_POPCNT
 								//	cout<<"censuswindow.h Line 101"<<endl;
@@ -161,7 +161,7 @@ namespace sparsestereo
 		// cvtColor(colorLeft, leftLab, CV_BGR2Lab);
   //  		cvtColor(colorRight, rightLab, CV_BGR2Lab);
 		//cout<<"censuswindow.h Line 163"<<endl;
-		if(combination == 1)
+		if(combination == 3)
 		{
 	   		int Yc =32 , Yp = 36 ,k=13; 	
 			for(int y=-SIZE/2; y<=SIZE/2; y++)
@@ -199,7 +199,7 @@ namespace sparsestereo
 					//cout<<"Costs = "<<costs<<endl;
 					costs = -costs/weightsAgg ; 
 		}
-		else
+		else if(combination ==1)
 		{
 				for(int y=-SIZE/2; y<=SIZE/2; y++)
 					for(int x=-SIZE/2; x<=SIZE/2; x++)
@@ -208,6 +208,53 @@ namespace sparsestereo
 								costs += hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x));
 		
 						}
+		}
+		else if(combination==0)
+		{
+			//cout<<"Here I am"<<endl;
+			int VerticalBlockSize= 61 ;
+			int HorizontalblockSize=61 ; 
+			int squareBlockSize1 = 11 ; 
+			int squareBlockSize2 = 3 ;
+			long double costVertical=0 ,costHorizontal=0,costBlockSize1 = 0, costBlockSize2 =0 ; 
+			for(int y=-VerticalBlockSize/2 ; y<VerticalBlockSize/2 ;y++)
+			{	int x =0  ;
+				if(!((refPoint.y +y <1)||(refPoint.x + x <0)))
+				{
+					costVertical += (hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x)));
+				}
+			}
+
+
+
+			for(int x=-HorizontalblockSize/2 ; x<HorizontalblockSize/2 ;x++)
+			{	int y =0  ;
+				if(!((refPoint.y +y <1)||(refPoint.x + x <0)))
+				{
+					costHorizontal += (hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x)));
+				}
+			}
+
+			for(int y=-squareBlockSize1/2; y<=squareBlockSize1/2; y++)
+				for(int x=-squareBlockSize1/2; x<=squareBlockSize1/2; x++)
+				{
+					if(!((refPoint.y +y <1)||(refPoint.x + x <0)))
+					{
+						costBlockSize1 += (hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x)));
+					}
+				}
+
+			for(int y=-squareBlockSize2/2; y<=squareBlockSize2/2; y++)
+				for(int x=-squareBlockSize2/2; x<=squareBlockSize2/2; x++)
+				{
+					if(!((refPoint.y +y <1)||(refPoint.x + x <0)))
+					{
+						costBlockSize2 += (hammingDist.calculate(refImage(refPoint.y + y, refPoint.x + x),compImage(point.y + y, point.x + x)));
+					}
+				}
+
+				costs = costBlockSize2*costBlockSize1*costHorizontal*costVertical/10000000;
+			//	cout<<"Costs ="<<costs<<endl;
 		}
 
 #else

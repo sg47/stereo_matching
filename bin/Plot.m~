@@ -8,7 +8,7 @@ x = [1:1:13] ;
  subplot(2,1,1); 
  bar(x,yOcc0);
  grid on ; 
-title('CannyEdgeOcc Multi Block Matching');
+title('CannyEdgeOcc Multi Blo');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 
@@ -16,7 +16,7 @@ ax.XTickLabelRotation=45;
 subplot(2,1,2); 
  bar(x,sgbmOcc0);
  grid on ; 
-title('SGBMOcc Multi Block Matching');
+title('SGBMOcc0');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 
@@ -31,7 +31,7 @@ x = [1:1:13] ;
  subplot(2,1,1); 
  bar(x,yOcc1);
  grid on ; 
-title('CannyEdgeOcc Non-Adaptive');
+title('CannyEdgeOcc1');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 
@@ -39,7 +39,7 @@ ax.XTickLabelRotation=45;
 subplot(2,1,2); 
  bar(x,sgbmOcc1);
  grid on ; 
-title('SGBMOcc Non-Adaptive');
+title('SGBMOcc1');
 
 ax=gca; 
  ax.XTickLabel = {'1Edge', '2Edge','4Edge','8Edge','12Edge', '16Edge','16PointAl','16PointDia','12Point', '8PointAl','4PointDia','2point','1point'} 
